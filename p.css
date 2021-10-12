@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#i{
+    font-size: 22px;
+    margin-left: 6px;
+    color: rgb(72, 111, 196);
+}
+
+#page-btn > button.active{
+  color: #fff;
+  background-color: #000;
+  border-color: #000;
+  border-radius: 4px;
+  font-size: 21px;
+  
+}
+#page-btn{
+    padding:5px;
+    border-radius: 4px;
+    font-size: 21px;
+  
+}
+
+#newrecord{
+    border-radius: 20px;
+    margin-top: -164px;
+    margin-left: 4px;
+}
+.swal-modal {
+    border: 2px solid rgb(17, 16, 16);
+    margin-bottom: 580px;
+    box-shadow: 0px 50px 30px rgba(0, 0, 0, 0.21);
+    
+}
+
+

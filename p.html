@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="stylesheet" href="p.css">
+    <title>Data Table</title>
+</head>
+
+<body id="body">
+    <div class="container">
+        <div class="container text-end">
+            <div class="alert align-items-center" id="message"></div>
+            <h2>data table</h2>
+            <label for="myInput" class="form-label">Search:</label>
+            <input type="text" id="myInput" aria-label="serch" onkeyup="serch()" placeholder="Search for names.."
+                title="Type in a name">
+        </div>
+        <div class="container">
+            <label>Show</label>
+            <select onchange="selectIn()" id="selectInput"></select>
+            <label>Entries</label>
+        </div>
+        <div class="container">
+            <button type="button" class="btn btn-primary" id="newrecord" data-bs-toggle="modal"
+                data-bs-target="#exampleModal" data-bs-whatever="@mdo">New Record</button>
+        </div>
+        <div class="conatiner">
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">New Record</h5>
+                            <button type="button" class="btn-close" id="btnClose" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="itemForm">
+                                <div class="mb-3">
+                                    <label for="Name" class="col-form-label">Name:</label>
+                                    <input type="text" class="form-control" id="Name">
+                                    <input type="hidden" id="saveindex">
+
+                                </div>
+                                <div class="mb-3">
+                                    <label for="positon" class="col-form-label">positon:</label>
+                                    <input type="text" class="form-control" id="positon">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="office" class="col-form-label">office:</label>
+                                    <input type="text" class="form-control" id="office">
+                                    <input type="hidden" id="saveindex">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="age" class="col-form-label">age:</label>
+                                    <input type="number" class="form-control" id="age">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="startdate" class="col-form-label">startdate:</label>
+                                    <input type="date" class="form-control" id="startdate"></textarea>
+                                </div>
+                                <div>
+                                    <button type="button" id="updtaebtn" style="display:none;"
+                                        class="btn btn-outline-primary">Update</button>
+                                    <button class="btn btn-outline-success" id="btn">ADDITEM</button>
+                                </div>
+                                <div class="form-btn" id="sub-btn"></div>
+                            </form>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <table id="myTable" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable('Name')">Name<i id="i" class="fas fa-caret-square-down"></i></th>
+                        <th onclick="sortTable('positon')">positon<i id="i" class="fas fa-caret-square-down"></i></th>
+                        <th onclick="sortTable('office')">Office<i id="i" class="fas fa-caret-square-down"></i></th>
+                        <th onclick="sortTable('age')">age<i id="i" class="fas fa-caret-square-down"></i></th>
+                        <th onclick="sortTable('startdate')">startdate<i id="i" class="fas fa-caret-square-down"></i>
+                        </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tablelist">
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Name</th>
+                        <th>positon</th>
+                        <th>Office</th>
+                        <th>age</th>
+                        <th>startdate</th>
+                        <th>Action</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="bot-content container d-flex justify-content-between">
+            <div>
+                <label>Showing <span id="start-count"></span> to <span id="end-count"></span> of <span
+                        id="total-count"></span> entries</label>
+            </div>
+            <div class="page d-flex">
+                <button id="previous" class="btn btn-outline-secondary" onclick="previousPage()">Previous</button>
+                <div id="page-btn" class="d-flex"></div>
+                <button id="next" class="btn btn-outline-secondary" onclick="nextPage()">Next</button>
+            </div>
+        </div>
+
+        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">edit table</h5>
+                        <button type="button" class="btn-close" id='closebutton' data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="edititemForm">
+                            <div class="mb-3">
+                                <label for="Name" class="col-form-label">Name:</label>
+                                <input type="text" class="form-control" id="editName">
+                                <input type="hidden" id="saveindex">
+                            </div>
+                            <div class="mb-3">
+                                <label for="positon" class="col-form-label">positon:</label>
+                                <input type="text" class="form-control" id="editpositon">
+                                <input type="hidden" id="saveindex1">
+                            </div>
+                            <div class="mb-3">
+                                <label for="office" class="col-form-label">office:</label>
+                                <input type="text" class="form-control" id="editoffice">
+                                <input type="hidden" id="saveindex2">
+                            </div>
+                            <div class="mb-3">
+                                <label for="age" class="col-form-label">age:</label>
+                                <input type="number" class="form-control" id="editage">
+                                <input type="hidden" id="saveindex3">
+                            </div>
+                            <div class="mb-3">
+                                <label for="startdate" class="col-form-label">startdate:</label>
+                                <input type="date" class="form-control" id="editstartdate"></textarea>
+                                <input type="hidden" id="saveindex4">
+                            </div>
+                            <div>
+                                <button class="btn btn-outline-success" id="update">Update</button>
+                            </div>
+                            <div class="form-btn" id="sub-btn"></div>
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="p.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
